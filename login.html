@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+    <title>TemboNet | Secure ISP Portal</title>
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 (Free) for professional icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* ----- RESET & GLOBAL ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f2b3d;
+            --primary-dark: #08212e;
+            --primary-light: #1e4a6e;
+            --accent: #00adb5;
+            --accent-glow: #00e0e8;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --dark: #1e2a3e;
+            --gray: #4a627a;
+            --light: #f8fafc;
+            --card-bg: #ffffff;
+            --shadow-sm: 0 8px 20px rgba(0,0,0,0.08);
+            --shadow-md: 0 24px 64px -20px rgba(4, 24, 40, 0.48);
+            --shadow-glow: 0 0 20px rgba(0,173,181,0.3);
+            --border-radius: 28px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #102c3b;
+            background-image:
+                radial-gradient(ellipse at 12% 15%, rgba(27, 153, 159, 0.24), transparent 52%),
+                radial-gradient(ellipse at 90% 85%, rgba(56, 104, 155, 0.28), transparent 54%),
+                linear-gradient(145deg, #102c3b 0%, #163f4b 48%, #12283e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+        }
+
+        /* Subtle texture over the teal and navy background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(218, 246, 246, 0.09) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: linear-gradient(to bottom, #000, transparent 85%);
+            -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Main Card - Modern Glassmorph */
+        .main-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(2px);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .main-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 70px -20px rgba(4, 24, 40, 0.52);
+        }
+
+        .card-body {
+            padding: 40px 32px 38px;
+        }
+
+        /* Logo Section */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .main-logo {
+            max-width: 210px;
+            height: auto;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.1));
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .main-logo:hover {
+            transform: scale(1.02);
+            filter: drop-shadow(0 12px 18px rgba(0,0,0,0.15));
+        }
+
+        /* Voucher Section */
+        .voucher-section h5 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 24px;
+            letter-spacing: -0.3px;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .voucher-section h5:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 12px auto 0;
+            border-radius: 4px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2edf2;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 500;
+            background: white;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+            font-family: monospace;
+            font-size: 1.05rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(0,173,181,0.2);
+            transform: scale(1.01);
+        }
+
+        /* Modern button */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            font-weight: 700;
+            border-radius: 60px;
+            transition: all 0.25s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+            background: var(--primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, var(--primary) 0%, var(--primary-light) 100%);
+            box-shadow: 0 8px 18px rgba(15,43,61,0.2);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: linear-gradient(105deg, var(--primary-dark) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(0,0,0,0.2);
+        }
+
+        .btn-success {
+            background: linear-gradient(105deg, #2c7a47, var(--success));
+            box-shadow: 0 5px 12px rgba(46,204,113,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gray);
+            color: var(--gray);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--gray);
+            color: white;
+            border-color: var(--gray);
+        }
+
+        /* Package Cards */
+        .package-section {
+            background: #f1f7f8;
+            border-radius: 28px;
+            padding: 20px 18px;
+            margin: 28px 0 20px;
+            border: 1px solid #e0f0f2;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .package-section h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .package-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 12px;
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--accent);
+        }
+
+        .package-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .package-card:hover {
+            transform: translateX(6px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            background: #ffffff;
+        }
+
+        .package-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .package-price {
+            font-weight: 800;
+            color: var(--primary);
+            background: #e7f0f3;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+        }
+
+        .see-all-link {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .see-all-link i {
+            font-size: 0.8rem;
+            margin-left: 6px;
+        }
+
+        /* Payment Widget */
+        .payment-widget {
+            background: linear-gradient(135deg, #f7fcfc, #edf6f7);
+            border-radius: 28px;
+            padding: 24px;
+            margin: 20px 0;
+            border: 1px solid rgba(0,173,181,0.3);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .provider-logos {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+        }
+
+        .provider-logos img {
+            height: 44px;
+            border-radius: 14px;
+            background: white;
+            padding: 6px 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: 0.2s;
+        }
+
+        .selected-package-info {
+            background: var(--primary);
+            color: white;
+            padding: 14px;
+            border-radius: 48px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .phone-input-section label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: var(--dark);
+        }
+
+        /* Alert modern */
+        .alert-modern {
+            padding: 14px 18px;
+            border-radius: 60px;
+            margin-top: 16px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(4px);
+        }
+
+        .alert-error {
+            background: #ffe8e6;
+            color: #b91c1c;
+            border-left: 4px solid var(--danger);
+        }
+
+        .alert-success {
+            background: #e3f9ee;
+            color: #0a5c2e;
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-info {
+            background: #e0f4f5;
+            color: #0f3b47;
+            border-left: 4px solid var(--accent);
+        }
+
+        .trial-link-modern {
+            background: rgba(0,173,181,0.1);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .help-section {
+            margin: 20px 0 12px;
+            text-align: center;
+        }
+
+        .help-link {
+            color: var(--accent);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .rights-section {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 16px;
+        }
+
+        button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        /* Spinner */
+        .spinner-icon {
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 540px) {
+            .card-body {
+                padding: 28px 20px;
+            }
+            .package-card {
+                padding: 12px 16px;
+            }
+            .main-logo {
+                max-width: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-card">
+        <div class="card-body">
+            <!-- Logo -->
+            <div class="logo-section">
+                <h1 style="color:var(--primary)">TemboNet</h1>
+            </div>
+
+            <!-- Voucher Login -->
+            <div class="voucher-section">
+                <h5><i class="fas fa-ticket-alt"></i> Voucher Access</h5>
+                
+                <!-- MikroTik / Hotspot dynamic variables -->
+               
+                <form name="sendinkv" action="$(link-login-only)" method="post">
+                    <input type="hidden" name="username" />
+                    <input type="hidden" name="password" />
+                    <input type="hidden" name="dst" value="$(link-orig)" />
+                    <input type="hidden" name="popup" value="true" />
+                </form>
+                <script>if (!document.forms.sendinkv.action.includes('$(')) { const script=document.createElement('script'); script.src='md5.js'; document.head.appendChild(script); }</script>
+                <script type="text/javascript">
+                function doLoginkv() {
+                    document.sendinkv.username.value = document.loginkv.usernamekv.value;
+                    const chapId = '$(chap-id)';
+                    const code = document.loginkv.usernamekv.value.trim();
+                    document.sendinkv.username.value = code;
+                    document.sendinkv.password.value = chapId && !chapId.includes('$(') ? hexMD5(chapId + code + '$(chap-challenge)') : code;
+                    document.sendinkv.submit();
+                    return false;
+                }
+                </script>
+               
+                
+                <form autocomplete="off" name="loginkv" action="$(link-login-only)" method="post"
+                onSubmit="return doLoginkv()">
+                    <input type="hidden" name="dst" value="$(link-orig)" />
+                    <input type="hidden" name="popup" value="true" />
+                    <div style="position: relative;">
+                        <i class="fas fa-key" style="position: absolute; left: 20px; top: 18px; color: var(--accent);"></i>
+                        <input name="usernamekv" type="text" class="form-control" 
+                               placeholder="Enter voucher code (e.g., 1A2B3C4D)" 
+                               value="$(username)" autocomplete="off" required style="padding-left: 48px;">
+                    </div>
+                    <input id="pass" name="passwordkv" type="hidden"/>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> Connect Now
+                    </button>
+                  
+                   
+                </form>
+            </div>
+
+            <!-- Free Trial (if enabled) -->
+           
+            <div style="text-align: center; margin: 20px 0 10px;">
+                <a href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)" class="trial-link-modern">
+                    <i class="fas fa-hourglass-half"></i> Free 2-Minute Trial
+                </a>
+            </div>
+          
+
+            <!-- Packages - Super ISP style -->
+            <div class="package-section">
+                <h3><i class="fas fa-shopping-bag"></i> Popular Plans</h3>
+                <button class="package-card" data-package="24 HOURS|1000" onclick="selectModernPackage(this)">
+                    <span class="package-name"><i class="fas fa-clock"></i> 24 Hours Pass</span>
+                    <span class="package-price">UGX 1,000</span>
+                </button>
+                <button class="package-card" data-package="1 WEEK|6000" onclick="selectModernPackage(this)">
+                    <span class="package-name"><i class="fas fa-calendar-week"></i> 7 Days Unlimited</span>
+                    <span class="package-price">UGX 6,000</span>
+                </button>
+                <button class="package-card" data-package="1 MONTH|20000" onclick="selectModernPackage(this)">
+                    <span class="package-name"><i class="fas fa-calendar-alt"></i> 30 Days Premium</span>
+                    <span class="package-price">UGX 20,000</span>
+                </button>
+                <a href="#payment-widget" class="see-all-link">
+                    Choose a plan above <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Payment Widget (Modern) -->
+            <div class="payment-widget" id="payment-widget" style="display: none;">
+                <div class="provider-logos">
+                    <span>Airtel Money</span>
+                    <span>MTN MoMo</span>
+                </div>
+                <div class="selected-package-info" id="selected-package-info">
+                    <i class="fas fa-receipt"></i> <span id="package-details">Select a package</span>
+                </div>
+                <div class="phone-input-section">
+                    <label><i class="fas fa-phone-alt"></i> Mobile Money Number</label>
+                    <input type="tel" id="phone" class="form-control" minlength="10" maxlength="12" 
+                           placeholder="07XXXXXXXX or 2567XXXXXXXX" required>
+                </div>
+                <div style="display: flex; gap: 12px; margin-top: 8px;">
+                    <button class="btn btn-success" id="btn-buy-modern">
+                        <i class="fas fa-check-circle"></i> Request Payment
+                    </button>
+                    <button class="btn btn-outline" onclick="hideModernWidget()">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+                <div id="response-message-modern"></div>
+                <input type="hidden" id="hidden-package-data-modern">
+            </div>
+
+            <!-- Help & Support -->
+            <div class="help-section">
+                <p><i class="fas fa-headset"></i> 24/7 Support: 
+                    <a href="tel:0709508211" class="help-link"><i class="fab fa-whatsapp"></i> 0709 508211</a> 
+                    | <a href="tel:0744766410" class="help-link">0788609743</a>
+                </p>
+            </div>
+
+            <!-- Rights -->
+            <div class="rights-section">
+                <small>&copy; 2025 TemboNet — Ultra-Fast Fiber ISP. All rights reserved.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ----- Enhanced JS with better UX & Security -----
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto focus voucher field
+        const voucherField = document.querySelector('input[name="usernamekv"]');
+        if (voucherField) voucherField.focus();
+        
+        initModernPayment();
+        
+        // Secure paste protection? not needed, but extra input sanitization
+        const phoneInput = document.getElementById('phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9+]/g, '').substring(0,12);
+            });
+        }
+    });
+
+    let currentSelectedPackage = null;
+
+    function selectModernPackage(button) {
+        const rawPackage = button.getAttribute('data-package');
+        if (!rawPackage) return;
+        
+        const [duration, amount] = rawPackage.split('|');
+        currentSelectedPackage = { duration, amount, raw: rawPackage };
+        
+        // Update widget display
+        document.getElementById('package-details').innerHTML = `${duration}  •  <strong>UGX ${parseInt(amount).toLocaleString()}</strong>`;
+        document.getElementById('hidden-package-data-modern').value = rawPackage;
+        
+        const widget = document.getElementById('payment-widget');
+        widget.style.display = 'block';
+        
+        // Smooth scroll to widget
+        widget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Clear any old messages
+        const msgDiv = document.getElementById('response-message-modern');
+        if (msgDiv) msgDiv.innerHTML = '';
+        
+        const phoneEl = document.getElementById('phone');
+        if (phoneEl) setTimeout(() => phoneEl.focus(), 300);
+    }
+
+    function hideModernWidget() {
+        document.getElementById('payment-widget').style.display = 'none';
+        document.getElementById('phone').value = '';
+        document.getElementById('response-message-modern').innerHTML = '';
+        currentSelectedPackage = null;
+    }
+
+    function initModernPayment() {
+        const btnBuy = document.getElementById('btn-buy-modern');
+        if (!btnBuy) return;
+        
+        const phoneInput = document.getElementById('phone');
+        const responseDiv = document.getElementById('response-message-modern');
+        const hiddenPackage = document.getElementById('hidden-package-data-modern');
+        
+        const showMsg = (type, text, isPersistent = false) => {
+            let icon = '<i class="fas fa-info-circle"></i>';
+            let cls = 'alert-info';
+            if (type === 'error') { icon = '<i class="fas fa-exclamation-triangle"></i>'; cls = 'alert-error'; }
+            if (type === 'success') { icon = '<i class="fas fa-check-circle"></i>'; cls = 'alert-success'; }
+            if (type === 'loading') { icon = '<i class="fas fa-spinner spinner-icon"></i>'; cls = 'alert-info'; }
+            
+            responseDiv.innerHTML = `<div class="alert-modern ${cls}" style="display:flex; justify-content:space-between;">
+                                        <span style="display:flex; gap:8px;">${icon} ${text}</span>
+                                        ${isPersistent ? '<i class="fas fa-times-circle" style="cursor:pointer;" onclick="this.parentElement.remove()"></i>' : ''}
+                                     </div>`;
+            if (!isPersistent && type !== 'loading') {
+                setTimeout(() => {
+                    if (responseDiv.innerHTML.includes(text)) responseDiv.innerHTML = '';
+                }, 8000);
+            }
+        };
+        
+        // Enhanced validation & request
+        btnBuy.addEventListener('click', async function() {
+            let phone = phoneInput.value.trim();
+            const packageDataRaw = hiddenPackage.value;
+            
+            if (!phone || !packageDataRaw) {
+                showMsg('error', 'Please enter a valid phone number and select a package.');
+                return;
+            }
+            
+            // Normalize Ugandan phone: allow 256xxx or 0xxx
+            let normalizedPhone = phone;
+            if (phone.startsWith('0')) {
+                normalizedPhone = '256' + phone.substring(1);
+            } else if (phone.startsWith('256') && phone.length === 12) {
+                normalizedPhone = phone;
+            } else if (/^[0-9]{9}$/.test(phone)) {
+                // edge for short format
+                normalizedPhone = '256' + phone;
+            }
+            
+            const phoneRegex = /^(2567[0-9]{8}|256[0-9]{9}|07[0-9]{8})$/;
+            if (!/^(07[0-9]{8}|2567[0-9]{8})$/.test(phone)) {
+                showMsg('error', 'Invalid Uganda number. Use format 07XXXXXXXX or 2567XXXXXXXX.');
+                return;
+            }
+            
+            const [duration, amount] = packageDataRaw.split('|');
+            
+            // Disable button & show loading
+            btnBuy.disabled = true;
+            showMsg('loading', 'Processing payment request...');
+            
+            // Prepare FormData with extra details for better ISP backend integration
+            const formData = new FormData();
+            formData.append('phone', normalizedPhone);
+            formData.append('package', duration);
+            formData.append('price', amount);
+            formData.append('source', 'tembonet_portal');
+            formData.append('timestamp', Date.now());
+            
+            try {
+                // Enhanced fetch with timeout & retry logic simulation
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 15000);
+                
+                const response = await fetch('voucher_request.php', {
+                    method: 'POST',
+                    body: formData,
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Persistent success message with reference ID
+                    const refId = data.request_id || data.ref || 'TX' + Math.floor(Math.random()*1000000);
+                    showMsg('success', 
+                        `✅ Payment request #${refId} created. Please send UGX ${amount} to TemboNet Paybill: 0744766410 (MTN/Airtel) for manual payment verification. A voucher is issued after approval.`, 
+                        true);
+                    phoneInput.value = '';   // reset field
+                    hiddenPackage.value = '';
+                    // Optional: Clear widget after 4 seconds? but keep for reference
+                    setTimeout(() => {
+                        if (document.getElementById('payment-widget').style.display !== 'none') {
+                            // but user might want to see
+                        }
+                    }, 2000);
+                } else {
+                    showMsg('error', data.message || 'Payment gateway error. Please contact support.');
+                }
+            } catch (err) {
+                console.error('Payment error:', err);
+                let errorText = 'Network error. Check connection or try again later.';
+                if (err.name === 'AbortError') errorText = 'Request timeout. Please retry.';
+                showMsg('error', errorText);
+            } finally {
+                btnBuy.disabled = false;
+            }
+        });
+        
+        // Enter key in phone field triggers buy
+        if (phoneInput) {
+            phoneInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    btnBuy.click();
+                }
+            });
+        }
+    }
+    
+    // Add copy-to-clipboard for support numbers (extra super feature)
+    function addCopyFeature() {
+        const helpLinks = document.querySelectorAll('.help-link');
+        helpLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const phoneNumber = link.innerText.replace(/\s/g, '');
+                if (phoneNumber && phoneNumber.length > 6) {
+                    navigator.clipboard.writeText(phoneNumber).then(() => {
+                        const toast = document.createElement('div');
+                        toast.innerText = '📞 Number copied!';
+                        toast.style.position = 'fixed';
+                        toast.style.bottom = '20px';
+                        toast.style.left = '50%';
+                        toast.style.transform = 'translateX(-50%)';
+                        toast.style.backgroundColor = '#0f2b3d';
+                        toast.style.color = 'white';
+                        toast.style.padding = '10px 20px';
+                        toast.style.borderRadius = '60px';
+                        toast.style.zIndex = '999';
+                        toast.style.fontWeight = '500';
+                        document.body.appendChild(toast);
+                        setTimeout(() => toast.remove(), 1800);
+                    });
+                }
+            });
+        });
+    }
+    
+    // Minor security: Disable right-click context menu on sensitive areas (optional)
+    // just for professionalism
+    document.querySelectorAll('.form-control').forEach(el => {
+        el.addEventListener('contextmenu', (e) => e.preventDefault());
+    });
+    
+    addCopyFeature();
+    
+    // also store session indicator to prevent duplicate payment widget showing multiple times? 
+    // already handled by hidden widget display toggle
+    window.selectModernPackage = selectModernPackage;
+    window.hideModernWidget = hideModernWidget;
+</script>
+
+<script>
+const voucherForm = document.forms.loginkv;
+if (voucherForm && voucherForm.getAttribute('action').includes('$(')) {
+ voucherForm.elements.usernamekv.value = '';
+ voucherForm.onsubmit = function(event) { event.preventDefault(); alert('This voucher connects through the MikroTik hotspot. Open this page through your configured router to connect to the internet.'); return false; };
+ document.querySelectorAll('a[href*="$("]').forEach(link => { link.hidden = true; });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+a,body,div,form,html,img,input,label,p,span{margin:0;padding:0;border:0;font-family:sans-serif,Arial}
+body,html{min-height:100%;overflow-x:hidden}
+/* Apply styles to the whole body */
+body {
+  /* Set the size and position of the background image */
+  background-image: url('../img/bg.jpg');
+  background-size: cover;
+  background-position: center;
+  
+  /* Use a pseudo-element to create a dark layer */
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+.btn{
+  height: 30px;
+  text-align: center;
+  padding-top: 5px;
+  width: 250px;
+  border: none;
+  background-color: #fa7d08;
+}
+/* Dark layer on top of the background image */
+body::before {
+  /* Content is empty since we're using the pseudo-element only for the overlay */
+  content: '';
+  
+  /* Cover the entire body */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Apply the dark color and transparency */
+  background-color: rgba(0, 0, 0, 0.753); /* Adjust opacity as needed */
+  
+  /* Ensure the layer stays in place and doesn't interfere with other elements */
+  z-index: -1;
+}
+/* Reset some basic styles */
+body, h1, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the navigation bar */
+.navbar {
+  position: fixed; /* Sticks the navbar to the top */
+  top: 0;
+  border-radius: 20px;
+  left: 0;
+  width: 100%; /* The navbar spans the full width of the page */
+  background-color: #ffffff47; /* Dark background color */
+  padding: 10px 0; /* Padding for spacing */
+  z-index: 1000; /* Ensures the navbar stays on top */
+}
+
+/* Container for the navbar */
+.navbar-container {
+  max-width: 1200px; /* Limit the width of the content in the navbar */
+  margin: 0 auto; /* Center the content */
+  padding: 0 20px; /* Add horizontal padding */
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space out the logo and menu */
+  align-items: center;
+  text-align: center; /* Center items vertically */
+}
+
+/* Style the logo link */
+.navbar-logo {
+  color: #fff; /* White text color */
+  font-size: 24px; /* Font size for the logo */
+  text-decoration: none; /* Remove underline from links */
+}
+
+/* Style the menu list */
+.navbar-menu {
+  list-style: none; /* Remove bullet points */
+  display: flex; /* Use flexbox for layout */
+  gap: 20px; /* Space between menu items */
+}
+
+/* Style the menu links */
+.navbar-link {
+  font-weight: bold;
+  ; /* White text color */
+  text-decoration: none; /* Remove underline from links */
+  font-size: 21px; /* Font size for the links */
+  padding: 5px 10px; /* Add padding for spacing */
+  transition: color 0.3s; /* Smooth color transition on hover */
+}
+
+
+.navbar-link:hover {
+  color: #fff; /* Light grey color on hover */
+}
+
+/* Add padding to the top of the content to avoid overlap with the navbar */
+.content {
+  padding-top: 60px; /* Adjust according to navbar height */
+}
+
+h{
+  font-size: 31px;
+}
+a{
+  color:#ffffff;
+  text-decoration: none;
+  padding: none;
+  margin: none;
+}
+.footer {
+  position: fixed; /* Sticks the footer to the bottom */
+  bottom: 0;
+  left: 0; /* Remove the left offset */
+  width: 100%; /* Set the footer width to 100% */
+  background-color: #000000; /* Dark background color */
+  padding: 10px; /* Add padding */
+  color: #fff; /* White text color */
+  z-index: 1000; /* Ensures the footer stays on top */
+}
+p{
+  color: white;
+}
+
+/* Footer container */
+.footer-container {
+  display: flex; /* Use flexbox */
+  justify-content: space-between; /* Space out content within the footer */
+  align-items: center; /* Center items vertically */
+  padding: 0 20px; /* Add horizontal padding */
+}
+
+/* Style the footer links */
+.footer-link {
+  color: #fff; /* White text color */
+  text-decoration: none; /* Remove underline */
+  padding: 5px; /* Add padding */
+  transition: color 0.3s; /* Smooth color transition on hover */
+}
+
+/* Change link color on hover */
+.footer-link:hover {
+  color: #aaa; /* Light grey color on hover */
+}
+input,label{vertical-align:middle;white-space:normal;background:0 0;line-height:1}label{position:relative;display:block}p::first-letter{text-transform:uppercase}.main{min-height:calc(100vh - 90px);width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}.ie-fixMinHeight{display:-webkit-box;display:-ms-flexbox;display:flex}.ico{height:16px;position:absolute;top:0;left:0;margin-top:13px;margin-left:14px}.logo{max-width:200px;display:block;margin:0 auto 30px auto}.logo *{fill:#fff}.lite .logo *{fill:#444}h1{text-align:center;color:#fff;font-size:24px!important}*{-webkit-box-sizing:border-box;box-sizing:border-box;font-size:16px}.wrap{margin:auto;padding:40px;-webkit-transition:width .3s ease-in-out;transition:width .3s ease-in-out}@media only screen and (min-width:1px) and (max-width:575px){.wrap{width:100%}}form{width:100%;margin-bottom:20px}@-webkit-keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}.fadeIn{-webkit-animation-name:fadeIn;animation-name:fadeIn}.animated{-webkit-animation-duration:1s;animation-duration:1s;-webkit-animation-fill-mode:both;animation-fill-mode:both}.info{color:#fff;text-align:center;margin-bottom:30px}input{outline:0;-webkit-appearance:none;-moz-appearance:none;appearance:none}input:focus{outline:0}input[type=password],input[type=text]{width:100%;border:1px solid background-color: rgba(255,255,255,.8);height:44px;padding:3px 20px 3px 40px;margin-bottom:20px;border-radius:6px;background-color:rgba(255,255,255,.8);-webkit-transition:-webkit-box-shadow .3s ease-in-out;transition:-webkit-box-shadow .3s ease-in-out;transition:box-shadow .3s ease-in-out;transition:box-shadow .3s ease-in-out,-webkit-box-shadow .3s ease-in-out}input[type=password]:focus,input[type=text]:focus{-webkit-box-shadow:0 0 5px 0 rgba(255,255,255,1);box-shadow:0 0 5px 0 rgba(255,255,255,1)}.bt{opacity:.4}input[type=submit]{background:rgb(5, 221, 149);color:#fff;border:0;cursor:pointer;text-align:center;width:100%;height:44px;border-radius:6px;-webkit-transition:background .3s ease-in-out;transition:background .3s ease-in-out}input[type=submit]:focus,input[type=submit]:hover{background:#0a0a0a}table{border-collapse:collapse;width:100%;margin-bottom:20px}table td{color:#fff;border-bottom:1px solid #e6e6e6;padding:10px 4px 10px 0}table td:first-child{font-weight:700}.lite{background:#fff}.lite input[type=password],.lite input[type=text]{border:1px solid #c3c3c3}.lite .info,.lite h1,.lite table td{color:#444}.lite input[type=password]:focus,.lite input[type=text]:focus{-webkit-box-shadow:0 0 5px 0 rgba(62,77,89,.2);box-shadow:0 0 5px 0 rgba(62,77,89,.2)}.dark{background:#343434}.dark input[type=submit]{background:#dc3a41}.dark input[type=submit]:focus,.dark input[type=submit]:hover{background:#b92f35}.dark input[type=password],.dark input[type=text]{background-color:#fff}.dark a{color:#dc3a41}.dark table td{border-bottom:1px solid #505050}.info.alert{color:#0885fa}@media (min-width:576px){.wrap{width:410px}*{font-size:14px!important}}
+/* Apply styles for smaller screens */
+@media (max-width: 767px) {
+  /* Navbar adjustments */
+  .navbar {
+    width: 100%; /* Make the navbar span the full width of the screen */
+    padding: 10px 20px; /* Add horizontal padding for smaller screens */
+  }
+  
+  /* Menu adjustments */
+  .navbar-menu {
+    flex-direction: column; 
+
+    /* Stack the menu items vertically */
+    gap: 10px; /* Reduce the gap between menu items */
+    margin-top: 10px; /* Add margin between the logo and menu */
+  }
+  
+  /* Footer adjustments */
+  .footer {
+    padding: 10px 20px; /* Add horizontal padding */
+    text-align: center; /* Center-align the content */
+  }
+  
+  /* Footer menu adjustments */
+  .footer-menu {
+    flex-direction: column; /* Stack the menu items vertically */
+    gap: 10px; /* Reduce the gap between menu items */
+    margin-top: 10px; /* Add margin between the copyright text and menu */
+  }
+
+  /* Form adjustments */
+  form {
+    width: 100%; /* Make the form span the full width of the screen */
+    padding: 10px; /* Add padding for smaller screens */
+  }
+  
+  /* Wrap adjustments */
+  .wrap {
+    width: 100%; /* Make the wrap span the full width of the screen */
+  }
+}
+
+/* Apply styles for larger screens */
+@media (min-width: 768px) {
+  /* Navbar adjustments */
+  .navbar {
+    width: 100%; /* Keep the navbar spanning the full width */
+    padding: 10px 20px; /* Add horizontal padding */
+  }
+  
+  /* Menu adjustments */
+  .navbar-menu {
+    flex-direction: row; /* Arrange the menu items horizontally */
+    gap: 20px; /* Maintain the gap between menu items */
+    margin-top: 0; /* Reset the margin between the logo and menu */
+  }
+  
+  /* Footer adjustments */
+  .footer {
+    padding: 10px 20px; /* Add horizontal padding */
+    text-align: left; /* Left-align the content */
+  }
+  
+  /* Footer menu adjustments */
+  .footer-menu {
+    flex-direction: row; /* Arrange the menu items horizontally */
+    gap: 20px; /* Maintain the gap between menu items */
+    margin-top: 0; /* Reset the margin between the copyright text and menu */
+  }
+
+  /* Form adjustments */
+  form {
+    width: auto; /* Allow the form to adapt to its contents */
+    padding: 0; /* Reset the padding */
+  }
+  
+  /* Wrap adjustments */
+  .wrap {
+    width: 410px; /* Maintain the width of the wrap container */
+  }
+}
+.navbar, .footer {
+  position: fixed; /* Keep the header and footer fixed */
+  left: 0;
+  width: 100%; /* Ensure they span the full width of the page */
+  z-index: 1000; /* Keep them on top of other content */
+}
+body, html {
+  height: auto;
+  min-height: 100%; /* Ensure the body and html take up the full height */
+  overflow-y: auto; /* Allow vertical scrolling when content exceeds the viewport height */
+}
+
+.reveal-btn {
+  background-color: #04be90;;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.payment-info {
+  display: none;
+  color: white;
+  font-style: italic;
+  margin-top: 10px;
+}
+ 
